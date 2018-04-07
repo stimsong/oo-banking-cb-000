@@ -1,6 +1,6 @@
 class Transfer
-  attr_accessor :sender
-  attr_reader :receiver, :amount, :status
+  attr_accessor :status
+  attr_reader :sender, :receiver, :amount
 
   def initialize(sender, receiver, amount)
     @sender = sender
@@ -16,8 +16,13 @@ class Transfer
       false
     end
   end
+###### FLATIRON SOLUTION ##########
+# def valid?
+#   sender.valid? && receiver.valid?
+# end
 
   def execute_transaction
+  ### See Flatiron solution below for diffent way to do this ###
     if valid? && status == "pending"
       sender.balance -= amount
       receiver.balance += amount
@@ -37,5 +42,21 @@ class Transfer
       self.status = "reversed"
     end
   end
-
 end
+
+######## FLATIRON SOLUTION ##########
+#
+# def execute_transaction
+#   if valid? && sender.balance > amount && self.status == "pending"
+#     sender.balance -= amount
+#     receiver.balance += amount
+#     self.status = "complete"
+#   else
+#     reject_transfer
+#   end
+# end
+#
+# def reject_transfer
+#   self.status = "rejected"
+#   "Transaction rejected. Please check your account balance."
+# end
